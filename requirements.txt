@@ -7,3 +7,4 @@ plotly.express
 dash_bootstrap_templates
 os
 plotly.graph_objects
+pip==23.0.1
