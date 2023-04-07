@@ -21,8 +21,6 @@ from dash.dash_table.Format import Group
 from dash.dependencies import Input, Output
 
 from data import *
-from app import app
-
 
 
 # This dictionary defines the parameters of each icon in kpi
