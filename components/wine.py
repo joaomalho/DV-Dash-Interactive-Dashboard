@@ -7,7 +7,6 @@ from dash import dcc
 from PIL import Image
 from dash import html
 from io import BytesIO
-import pandas_ta as pta
 from datetime import date
 from dash import dash_table
 import plotly.express as px
