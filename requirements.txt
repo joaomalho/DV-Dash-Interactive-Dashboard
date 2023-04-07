@@ -1,7 +1,7 @@
 dash==2.8.1
-pandas
+pandas==1.5.3
 gunicorn
-dash_bootstrap_components
+dash_bootstrap_components==1.4.1
 numpy
 plotly.express
 dash_bootstrap_templates
