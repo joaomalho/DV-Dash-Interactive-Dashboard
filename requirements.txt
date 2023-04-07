@@ -6,3 +6,4 @@ numpy==1.21.6
 plotly==5.13.0
 dash_bootstrap_templates==1.0.8
 pip==23.0.1
+request
