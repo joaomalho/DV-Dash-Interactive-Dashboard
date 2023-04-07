@@ -2,9 +2,7 @@ dash==2.8.1
 pandas==1.5.3
 gunicorn
 dash_bootstrap_components==1.4.1
-numpy
-plotly.express
-dash_bootstrap_templates
-os
-plotly.graph_objects
+numpy==1.24.2
+plotly==5.13.0
+dash_bootstrap_templates==1.0.8
 pip==23.0.1
