@@ -9,3 +9,4 @@ pip==23.0.1
 requests
 openpyxl==3.1.2
 Pillow==9.4.0
+bs4==0.0.1
