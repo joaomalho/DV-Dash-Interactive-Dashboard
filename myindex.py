@@ -17,7 +17,6 @@ from IPython.display import display
 from dash import html, dcc, dash_table
 import dash_bootstrap_components as dbc
 from dash.dash_table.Format import Group
-from components import sidebar, geoanalysis, wine
 from dash.dependencies import Input, Output, State
 from dash_bootstrap_templates import ThemeChangerAIO
 
