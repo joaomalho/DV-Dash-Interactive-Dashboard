@@ -37,7 +37,6 @@ app.config['suppress_callback_exceptions'] = True
 app.scripts.config.serve_locally = True
 server = app.server
 
-
 # =========== Data Auxiliar =========== #
 
 # === Geo Analysis === #
@@ -58,7 +57,7 @@ data_sub_region = data['Sub_region'].unique()
 data_metrics = data.iloc[:, [5, 10, 11]].columns
 
 # === Geojson === #
-url = "https://raw.githubusercontent.com/joaomalho/Data-Visualization-Project/main/Data/Data_files/countries.geojson"
+url = "https://raw.githubusercontent.com/joaomalho/Data-Visualization-Project/main/Data/Data_files/countries.json"
 response = requests.get(url)
 country_geojson = response.json()
 
@@ -120,6 +119,7 @@ data_wine = data_top10['Wine'].unique()
 # 2 - https://ourworldindata.org/grapher/wine-production | Wine Production and Compsumption
 # 3 - https://use.fontawesome.com/releases/v5.10.2/css/all.css | Icons
 # 4 - https://datahub.io/core/geo-countries#python | ISO file all countries
+# 5 - https://vivino.com | Webscrapp 
 
 
 # This dictionary defines the parameters of each icon in kpi
@@ -145,9 +145,8 @@ app.layout = dbc.Container(children=[
                     html.P('By Team:', className='text-info', style={'textDecoration': 'underline', 'fontStyle': 'italic','padding': '5px', 'margin': '0px', 'font-size': '20px'}),
                     html.P('João Malho     | 20220696', className='text-primary', style={'padding': '0px', 'margin': '0px', 'font-size': '15px'}),
                     html.P('Daniel Franco  | 20210719', className='text-primary', style={'padding': '0px', 'margin': '0px', 'font-size': '15px'}),
-                    html.P('Sabeen         | 20220726', className='text-primary', style={'padding': '0px', 'margin': '0px', 'font-size': '15px'}),
+                    html.P('Sabeen Mubashar| 20220726', className='text-primary', style={'padding': '0px', 'margin': '0px', 'font-size': '15px'}),
                     html.P('Tomas Vicente  | 20221355', className='text-primary', style={'padding': '0px', 'margin': '0px', 'font-size': '15px'}),
-
 
     # NAV section === #
                     html.Hr(),              
@@ -172,9 +171,7 @@ app.layout = dbc.Container(children=[
                         'background-image': 'url("/assets/vinha-roxo.avif")', 'background-size': 'cover', 'background-position': 'center'}
             )
         ], md=2),
-        
-        
-        
+
         dbc.Col([
             
 # ========= Graphs Wine Top 10 ========= # 
