@@ -44,11 +44,13 @@ server = app.server
 path = (r'https://raw.githubusercontent.com/joaomalho/Data-Visualization-Project/main/Data/Data_files/wine_country.csv')
 data = pd.read_csv(path)
 
+data.rename(columns = {'Total_Wine_Consumption':'Total Wine Consumption'}, inplace = True)
+
 # === Filters === #
     # Geo Analysis #
 # Country
 data_country = data['Country'].unique()
-# Continent
+# Continents
 data_continent = data['Region'].unique()
 # Sub_region
 data_sub_region = data['Sub_region'].unique()
@@ -149,7 +151,7 @@ app.layout = dbc.Container(children=[
 
     # NAV section === #
                     html.Hr(),              
-                    ThemeChangerAIO(aio_id="theme", radio_props={"value":dbc.themes.DARKLY})
+                    #ThemeChangerAIO(aio_id="theme", radio_props={"value":dbc.themes.DARKLY})
 
                 ], 
                 outline=False,
@@ -186,7 +188,7 @@ app.layout = dbc.Container(children=[
                 dbc.Col([
                         dbc.CardGroup([
                                 dbc.Card([
-                                        html.Legend("Total Population", style={'font-size': '25px'}),                              # Title
+                                        html.Legend("Avg. Total Population", style={'font-size': '25px'}),                              # Title
                                         html.H5(id="p-population-geoanalysis", style={'font-size': '20px'}),           # Value and id 
                                 ], color='dark',
                                     outline=False,
@@ -214,7 +216,7 @@ app.layout = dbc.Container(children=[
                 dbc.Col([
                         dbc.CardGroup([
                                 dbc.Card([
-                                    html.Legend("Consumption (Lt)", style={'font-size': '25px'}),
+                                    html.Legend("Avg. Consumption (Lt)", style={'font-size': '25px'}),
                                     html.H5(id="p-consumption-geoanalysis", style={'font-size': '20px'}),
                                         ], color='dark',
                                             outline=False,
@@ -237,7 +239,7 @@ app.layout = dbc.Container(children=[
                 dbc.Col([
                     dbc.CardGroup([
                         dbc.Card([
-                            html.Legend("Production (Lt)", style={'font-size': '25px'}),
+                            html.Legend("Avg. Production (Lt)", style={'font-size': '25px'}),
                             html.H5(id="p-production-geoanalysis", style={'font-size': '20px'}),
                                 ], color='dark',
                                     outline=False,
@@ -268,7 +270,7 @@ app.layout = dbc.Container(children=[
                         dcc.RangeSlider(
                             min= data['Year'].min(),                                                        # Min range                                                         
                             max= data['Year'].max(),                                                        # Max Range
-                            value= [data['Year'].min(), data['Year'].max()],                                # Default Range selected
+                            value= [2010, 2019],                                # Default Range selected
                             step=1,                                                                         # Step by step selection
                             persistence=True,                                                               # will remain selected
                             persistence_type="session",                                                     # will remain selected per session
@@ -306,7 +308,7 @@ app.layout = dbc.Container(children=[
                             persistence_type="session",                                                             # Store in session
                             multi=True,                                                                             # Ability to choose multi selections
                             options=[{"label": country, "value": country} for country in data_country],
-                            value='Portugal'
+                            value=''
                                     )           
                             ], color='dark',
                                 outline=False,
@@ -331,7 +333,7 @@ app.layout = dbc.Container(children=[
                             persistence_type="session",                                                             # Store in session
                             multi=True,                                                                             # Ability to choose multi selections
                             options=[{"label": region, "value": region} for region in data_continent],
-                            value='Europe'
+                            value=''
                                     )           
                             ], color='dark',
                                 outline=False,
@@ -356,7 +358,7 @@ app.layout = dbc.Container(children=[
                             persistence_type="session",                                                             # Store in session
                             multi=True,                                                                             # Ability to choose multi selections
                             options=[{"label": sub, "value": sub} for sub in data_sub_region],
-                            value='Southern Europe'
+                            value=''
                                     )           
                             ], color='dark',
                                 outline=False,
@@ -494,7 +496,7 @@ app.layout = dbc.Container(children=[
                             persistence_type="session",                                                             # Store in session
                             multi=True,                                                                             # Ability to choose multi selections
                             options=[{"label": country, "value": country} for country in data_country_wine],
-                            value='Portugal'
+                            value=''
                                     )           
                             ], color='dark',
                                 outline=False,
@@ -519,7 +521,7 @@ app.layout = dbc.Container(children=[
                             persistence_type="session",                                                             # Store in session
                             multi=True,                                                                             # Ability to choose multi selections
                             options=[{"label": region, "value": region} for region in data_continent_wine],
-                            value='Europe'
+                            value=''
                                     )           
                             ], color='dark',
                                 outline=False,
@@ -544,7 +546,7 @@ app.layout = dbc.Container(children=[
                             persistence_type="session",                                                             # Store in session
                             multi=True,                                                                             # Ability to choose multi selections
                             options=[{"label": year, "value": year} for year in data_year_wine],
-                            value='1994'
+                            value=''
                                     )           
                             ], color='dark',
                                 outline=False,
@@ -569,7 +571,7 @@ app.layout = dbc.Container(children=[
                             persistence_type="session",                                                             # Store in session
                             multi=True,                                                                             # Ability to choose multi selections
                             options=[{"label": sub, "value": sub} for sub in data_sub_region_wine],
-                            value='Southern Europe'
+                            value=''
                                     )           
                             ], color='dark',
                                 outline=False,
@@ -819,16 +821,14 @@ def update_graph_1(countries, continents, sub_regions, year, metric):
 
 def update_graph_2(countries, continents, sub_regions, year, metric):
 
-    # In case of no selection return an Image ?????
-    if not any([metric]):
-        fig = go.Figure()
-        return fig
-
     countries = list(countries) if countries else []
     continents = list(continents) if continents else []
     sub_regions = list(sub_regions) if sub_regions else []
-    #metric = list(metric) if metric else []
-
+    
+    # In case of no selection return an Image ?????
+    if not any([metric]):
+        return go.Figure()
+        
     # Dataset filter according to the filter dropboxs
     filtered_df = data[
         (data['Country'].isin(countries) if countries else True) &
@@ -843,7 +843,7 @@ def update_graph_2(countries, continents, sub_regions, year, metric):
         for country in countries:
             country_filtered_df = filtered_df[filtered_df['Country'] == country]
             total_metric_by_year = country_filtered_df.groupby('Year')[metric].sum()
-            mean_metric_by_year = country_filtered_df[metric].mean()
+            mean_metric_by_year = country_filtered_df.groupby('Year')[metric].sum().mean()
             fig2.add_trace(
                     go.Scatter(
                                 x=total_metric_by_year.index, 
@@ -865,22 +865,21 @@ def update_graph_2(countries, continents, sub_regions, year, metric):
                         name='Mean'
                     )
 
-    else:
-        total_metric_by_year = filtered_df.groupby('Year')[metric].sum()
-        mean_metric_by_year = filtered_df[metric].mean()
-        
-        fig2.add_trace(
-                go.Scatter(
-                            x=total_metric_by_year.index, 
-                            y=total_metric_by_year.values,
-                            mode='lines+markers',
-                            marker=dict(size=10), #color="MediumPurple"
-                            name='Total',
-                            showlegend=True
-                        ))
-        
-                    # Add a horizontal line for the mean value
-        fig2.add_shape(
+    elif len(continents) > 0:
+        for continent in continents:
+            continent_filtered_df = filtered_df[filtered_df['Region'] == continent]
+            total_metric_by_year = continent_filtered_df.groupby('Year')[metric].sum()
+            mean_metric_by_year = continent_filtered_df.groupby('Year')[metric].sum().mean()
+            fig2.add_trace(
+                    go.Scatter(
+                                x=total_metric_by_year.index, 
+                                y=total_metric_by_year.values,
+                                mode='lines+markers',
+                                marker=dict(size=10),
+                                name=continent
+                            ))
+            # Add a horizontal line for the mean value
+            fig2.add_shape(
                         # Line Horizontal
                         type="line",
                         x0=total_metric_by_year.index.min(),
@@ -890,7 +889,61 @@ def update_graph_2(countries, continents, sub_regions, year, metric):
                         line=dict(color='red', width=2, dash='dash'),
                         name='Mean'
                     )
+            
+    elif len(sub_regions) > 0:
+        for sub_region in sub_regions:
+            sub_region_filtered_df = filtered_df[filtered_df['Sub_region'] == sub_region]
+            total_metric_by_year = sub_region_filtered_df.groupby('Year')[metric].sum()
+            mean_metric_by_year = sub_region_filtered_df.groupby('Year')[metric].sum().mean()
+            
+            fig2.add_trace(
+                    go.Scatter(
+                                x=total_metric_by_year.index, 
+                                y=total_metric_by_year.values,
+                                mode='lines+markers',
+                                marker=dict(size=10),
+                                name=sub_region
+                            ))
+            # Add a horizontal line for the mean value
+            fig2.add_shape(
+                        # Line Horizontal
+                        type="line",
+                        x0=total_metric_by_year.index.min(),
+                        y0=mean_metric_by_year,
+                        x1=total_metric_by_year.index.max(),
+                        y1=mean_metric_by_year,
+                        line=dict(color='red', width=2, dash='dash'),
+                        name='Mean'
+                    )
+    else:
+        # Dataset filter according to the filter dropboxs
+        filtered_df = data[
+                            (data['Year'] >= year[0]) & 
+                            (data['Year'] <= year[1])
+                        ]
+        total_metric_by_year = filtered_df.groupby('Year')[metric].sum()
+        mean_metric_by_year = filtered_df.groupby('Year')[metric].sum().mean()
+        # Add a horizontal line for the mean value
+        fig2.add_shape(
+                    # Line Horizontal
+                    type="line",
+                    x0=total_metric_by_year.index.min(),
+                    y0=mean_metric_by_year,
+                    x1=total_metric_by_year.index.max(),
+                    y1=mean_metric_by_year,
+                    line=dict(color='red', width=2, dash='dash'),
+                    name='Mean'
+                )
         
+        fig2.add_trace(
+                go.Scatter(
+                            x=total_metric_by_year.index, 
+                            y=total_metric_by_year.values,
+                            mode='lines+markers',
+                            marker=dict(size=10),
+                            name='Total'
+                        ))
+            
     fig2.update_layout(
         paper_bgcolor='#242424',
         plot_bgcolor='#242424',
@@ -898,7 +951,8 @@ def update_graph_2(countries, continents, sub_regions, year, metric):
         margin=dict(l=10, r=10, t=80, b=10),
         yaxis_title=f'Total {metric}',
         title=dict(text=f'Total {metric} per year evolution', x=0.5, y=0.95, xanchor='center', yanchor='top',font=dict(size=20, color='#66B2FF')),
-        xaxis=dict(title='Year', dtick=1)
+        xaxis=dict(title='Year', dtick=1),
+        showlegend=True
         )
     
     return fig2
@@ -941,8 +995,16 @@ def update_graph_3(countries, continents, sub_regions, year, metric):
                     values=metric,
                     hover_data={'Region': True, 
                                 'Sub_region': True, 
-                                'Country': True, metric: ':,.2f'})
-
+                                'Country': True,
+                                metric: ':,.2f'},
+                    custom_data=['Region', 'Sub_region', 'Country', metric])
+                    
+    fig.update_traces(hovertemplate='<b>%{label}</b><br>' +
+                                'Region: %{customdata[0]}<br>' +
+                                'Sub-region: %{customdata[1]}<br>' +
+                                'Country: %{customdata[2]}<br>' +
+                                f'{metric}: %{{customdata[3]:,.2f}}')
+    
     layout = {'template': 'plotly_dark'}
     
     fig.update_layout(layout)
@@ -992,9 +1054,9 @@ def update_kpi_sales(countries, continents, sub_regions, year):
         (data['Year'] <= year[1])]
     
     # KPIs Values
-    Population = "# {:,.2f}".format(filtered_df['Population'].sum())
-    consumption = "Lt {:,.2f}".format(filtered_df['Total_Wine_Consumption'].sum())
-    production = "Lt {:,.2f}".format(filtered_df['Production (liters)'].sum())
+    Population = "# {:,.2f}".format(filtered_df.groupby('Year')['Population'].sum().mean())
+    consumption = "Lt {:,.2f}".format(filtered_df.groupby('Year')['Total Wine Consumption'].sum().mean())
+    production = "Lt {:,.2f}".format(filtered_df.groupby('Year')['Production (liters)'].sum().mean())
     
     return [Population,
             consumption,
