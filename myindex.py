@@ -1092,6 +1092,7 @@ def update_graph_3(style):
         average_rating = filtered_df.groupby('Country')['Rating'].mean()
         Country_unique = filtered_df.groupby('Country', as_index=False)['Rating'].count()['Country']
 
+        
         fig = px.scatter(filtered_df, x= average_price, y=average_rating,
                         size=average_reviews, color=Country_unique, hover_name=Country_unique,
                         log_x=True, facet_col_wrap=1)
@@ -1117,6 +1118,16 @@ def update_graph_3(style):
                         yanchor='top',
                         font=dict(size=20, color='#66B2FF'),
                     ),
+                )
+    
+    fig.update_traces(
+                    hovertemplate='<b>%{hovertext}</b><br><br>' +
+                                'Avg. of Price: $%{x:.2f}<br>' +
+                                'Avg. of Rating: %{y:.2f}<br>' +
+                                'Avg. # of Reviews: %{marker.size:.2f}<br>' +
+                                '<extra></extra>',
+                    hovertext=Country_unique,
+                    name='Country'
                 )
         
     return fig
