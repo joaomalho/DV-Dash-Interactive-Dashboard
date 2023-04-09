@@ -478,6 +478,7 @@ app.layout = dbc.Container(children=[
                         'color': '#FFFFFF'})
             ], md=12,),
             ]),
+            
             # 1st Row Filters
             dbc.Row([
 
@@ -556,7 +557,7 @@ app.layout = dbc.Container(children=[
                                     })   
                         ], width=3), 
 
-# Sub-Region Filter    
+                # Sub-Region Filter    
                 dbc.Col([
                     dbc.Card([
                         html.Label("Wine Sub-Region", style={}),
@@ -582,7 +583,7 @@ app.layout = dbc.Container(children=[
                         ], width=3),
                     ], style={"margin": "10px",
                             '--bs-gutter-x': '0',
-                            'margin-top': '10px'}),
+                            'margin-top': '30px'}),
 
             # === 1st Line of graphs === #
             dbc.Card([
@@ -799,6 +800,7 @@ def update_graph_1(countries, continents, sub_regions, year, metric):
                             'tickfont': {'color': 'white','size': 12}
                             },   
         )
+
 
     return fig
     
@@ -1145,6 +1147,12 @@ def update_graph_3(countries, continents, sub_regions, year):
 
     if not any([countries, continents, sub_regions, year]):
         filtered_df = data_top10.copy()
+        
+        average_reviews = filtered_df.groupby('Style')['Reviews'].mean()
+        average_price = filtered_df.groupby('Style')['Price'].mean()
+        average_rating = filtered_df.groupby('Style')['Rating'].mean()
+        Style_unique = filtered_df.groupby('Style', as_index=False)['Rating'].count()['Style']
+        
     else:
         filtered_df = data_top10[
             (data_top10['Country'].isin(countries) if countries else True) &
@@ -1152,17 +1160,23 @@ def update_graph_3(countries, continents, sub_regions, year):
             (data_top10['Sub_region'].isin(sub_regions) if sub_regions else True) &
             (data_top10['Year'].isin(year) if year else True)]
 
-    fig = px.scatter(filtered_df, x='Price', y="Rating",
-            size="Reviews", color="Wine Continent", hover_name="Wine",
+        average_reviews = filtered_df.groupby('Style')['Reviews'].mean()
+        average_price = filtered_df.groupby('Style')['Price'].mean()
+        average_rating = filtered_df.groupby('Style')['Rating'].mean()
+        Style_unique = filtered_df.groupby('Style', as_index=False)['Rating'].count()['Style']
+
+    fig = px.scatter(filtered_df, x= average_price, y=average_rating,
+            size=average_reviews, color=Style_unique, hover_name=Style_unique,
             log_x=True, facet_col_wrap=1)
 
     layout = {'template': 'plotly_dark'}
 
+
     fig.update_layout(layout)    
 
     fig.update_layout(
-        xaxis_title='Price',
-        yaxis_title='Reviews',
+        xaxis_title='Average Price',
+        yaxis_title='Average Rating',
         showlegend=True,
         height=400,
         margin=dict(l=20, r=20, t=80, b=20),
