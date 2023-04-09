@@ -105,6 +105,8 @@ data_top10['Wine Continent'] = data_top10['Region_y']
 
 # Country
 data_country_wine = data_top10['Country'].unique()
+# Style
+data_style_wine = data_top10['Style'].unique()
 # Continent
 data_continent_wine = data_top10['Wine Continent'].unique()
 # Sub_region
@@ -479,112 +481,6 @@ app.layout = dbc.Container(children=[
             ], md=12,),
             ]),
             
-            # 1st Row Filters
-            dbc.Row([
-
-                # Country Filter    
-                dbc.Col([
-                    dbc.Card([
-                        html.Label("Wine Country", style={}),
-                        dcc.Dropdown(           
-                            id="dropdown-country-wine",                                                                  # Ref id for coding
-                            clearable=True,                                                                         # Able to click on x in drop cleaning data 
-                            style={"width": "100%", 'color':'#242424'},                                                                # Occupancy of bar
-                            persistence=True,                                                                       # Remain after page refresh
-                            persistence_type="session",                                                             # Store in session
-                            multi=True,                                                                             # Ability to choose multi selections
-                            options=[{"label": country, "value": country} for country in data_country_wine],
-                            value=''
-                                    )           
-                            ], color='dark',
-                                outline=False,
-                                style={"height": 80, 
-                                    "padding-left": "20px", 
-                                    "padding-top": "10px", 
-                                    'margin-right': '10px',
-                                    'box-shadow': '0 10px 10px 0 rgba(0, 0, 0, 1), 0 10px 10px 0 rgba(0, 0, 0, 1)',
-                                    'color': '#FFFFFF'
-                                    })              # Style parameters
-                        ], width=3),
-                
-                # Region Filter    
-                dbc.Col([
-                    dbc.Card([
-                        html.Label("Wine Continent", style={}),
-                        dcc.Dropdown(           
-                            id="dropdown-continent-wine",                                                                # Ref id for coding
-                            clearable=True,                                                                         # Able to click on x in drop cleaning data 
-                            style={"width": "100%", 'color':'#242424'},                                                                # Occupancy of bar
-                            persistence=True,                                                                       # Remain after page refresh
-                            persistence_type="session",                                                             # Store in session
-                            multi=True,                                                                             # Ability to choose multi selections
-                            options=[{"label": region, "value": region} for region in data_continent_wine],
-                            value=''
-                                    )           
-                            ], color='dark',
-                                outline=False,
-                                style={"height": 80, 
-                                    "padding-left": "20px", 
-                                    "padding-top": "10px", 
-                                    'margin-right': '10px',
-                                    'box-shadow': '0 10px 10px 0 rgba(0, 0, 0, 1), 0 10px 10px 0 rgba(0, 0, 0, 1)',
-                                    'color': '#FFFFFF'
-                                    })   
-                        ], width=3), 
-                
-                # Year Filter    
-                dbc.Col([
-                    dbc.Card([
-                        html.Label("Wine Year", style={}),
-                        dcc.Dropdown(           
-                            id="dropdown-year-wine",                                                                # Ref id for coding
-                            clearable=True,                                                                         # Able to click on x in drop cleaning data 
-                            style={"width": "100%", 'color':'#242424'},                                                                # Occupancy of bar
-                            persistence=True,                                                                       # Remain after page refresh
-                            persistence_type="session",                                                             # Store in session
-                            multi=True,                                                                             # Ability to choose multi selections
-                            options=[{"label": year, "value": year} for year in data_year_wine],
-                            value=''
-                                    )           
-                            ], color='dark',
-                                outline=False,
-                                style={"height": 80, 
-                                    "padding-left": "20px", 
-                                    "padding-top": "10px", 
-                                    'margin-right': '10px',
-                                    'box-shadow': '0 10px 10px 0 rgba(0, 0, 0, 1), 0 10px 10px 0 rgba(0, 0, 0, 1)',
-                                    'color': '#FFFFFF'
-                                    })   
-                        ], width=3), 
-
-                # Sub-Region Filter    
-                dbc.Col([
-                    dbc.Card([
-                        html.Label("Wine Sub-Region", style={}),
-                        dcc.Dropdown(           
-                            id="dropdown-sub-region-wine",                                                                # Ref id for coding
-                            clearable=True,                                                                         # Able to click on x in drop cleaning data 
-                            style={"width": "100%", 'color':'#242424'},                                                                # Occupancy of bar
-                            persistence=True,                                                                       # Remain after page refresh
-                            persistence_type="session",                                                             # Store in session
-                            multi=True,                                                                             # Ability to choose multi selections
-                            options=[{"label": sub, "value": sub} for sub in data_sub_region_wine],
-                            value=''
-                                    )           
-                            ], color='dark',
-                                outline=False,
-                                style={"height": 80, 
-                                    "padding-left": "20px", 
-                                    "padding-top": "10px", 
-                                    'margin-right': '10px',
-                                    'box-shadow': '0 10px 10px 0 rgba(0, 0, 0, 1), 0 10px 10px 0 rgba(0, 0, 0, 1)',
-                                    'color': '#FFFFFF'
-                                    })                # Style parameters
-                        ], width=3),
-                    ], style={"margin": "10px",
-                            '--bs-gutter-x': '0',
-                            'margin-top': '30px'}),
-
             # === 1st Line of graphs === #
             dbc.Card([
                 dbc.Row([
@@ -697,6 +593,39 @@ app.layout = dbc.Container(children=[
                         'color': '#FFFFFF'}
                 ),
             
+            # 1st Row Filters
+            dbc.Row([
+
+                # Style Filter    
+                dbc.Col([
+                    dbc.Card([
+                        html.Label("Wine Style", style={}),
+                        dcc.Dropdown(           
+                            id="dropdown-style-wine",                                                                  # Ref id for coding
+                            clearable=True,                                                                         # Able to click on x in drop cleaning data 
+                            style={"width": "100%", 'color':'#242424'},                                                                # Occupancy of bar
+                            persistence=True,                                                                       # Remain after page refresh
+                            persistence_type="session",                                                             # Store in session
+                            multi=True,                                                                             # Ability to choose multi selections
+                            options=[{"label": style, "value": style} for style in data_style_wine],
+                            value=''
+                                    )           
+                            ], color='dark',
+                                outline=False,
+                                style={"height": 80, 
+                                    "padding-left": "20px", 
+                                    "padding-top": "10px", 
+                                    'margin-right': '10px',
+                                    'box-shadow': '0 10px 10px 0 rgba(0, 0, 0, 1), 0 10px 10px 0 rgba(0, 0, 0, 1)',
+                                    'color': '#FFFFFF'
+                                    })              # Style parameters
+                        ], width=12),
+            
+                    ], style={"margin": "10px",
+                            '--bs-gutter-x': '0',
+                            'margin-top': '30px'}),
+
+
             # === 2rd Line of graphs === #
             dbc.Card([
                 dbc.Row([                                                                                             # New Row
@@ -720,7 +649,7 @@ app.layout = dbc.Container(children=[
                     style={"height": '100%',  
                         'margin-right': '20px',
                         'margin-left': '10px',
-                        'margin-top': '20px',
+                        'margin-top': '10px',
                         'box-shadow': '0 10px 10px 0 rgba(0, 0, 0, 1), 0 10px 10px 0 rgba(0, 0, 0, 1)',
                         'color': '#FFFFFF'}
                 ),
@@ -770,8 +699,8 @@ def update_graph_1(countries, continents, sub_regions, year, metric):
         (data['Year'] >= year[0]) &
         (data['Year'] <= year[1])]
 
-    # Group the data by location and aggregate the color values
-    grouped_data = filtered_df.groupby(['ISO_Code', 'Country'])[metric].sum().reset_index()
+    # Group the data by location and aggregate the color values ||| MEAN
+    grouped_data = filtered_df.groupby(['ISO_Code','Country','Year','Sub_region','Region'])[metric].mean().reset_index()
 
     fig = go.Figure()
 
@@ -989,7 +918,10 @@ def update_graph_3(countries, continents, sub_regions, year, metric):
         (data['Year'] >= year[0]) &
         (data['Year'] <= year[1])]
 
-    fig = px.sunburst(filtered_df, 
+    # Group the data by location and aggregate the color values ||| MEAN
+    group_df = filtered_df.groupby(['ISO_Code','Country','Year','Sub_region','Region'])[metric].mean().reset_index()
+    
+    fig = px.sunburst(group_df, 
                     path=['Region', 'Sub_region', 'Country'], 
                     values=metric,
                     hover_data={'Region': True, 
@@ -1132,69 +1064,62 @@ def update_wine_details(wine):
 # Data Filter Callbacks
     Output('graph3_winerating_wine', 'figure'),                         # We want to affect "graph1" component "figure"
     [
-        Input('dropdown-country-wine', 'value'),
-        Input('dropdown-continent-wine', 'value'),                  # The filter that trigger this change is ID = 'dropdown-country' the component 'value' | Much inputs as filters
-        Input('dropdown-sub-region-wine', 'value'),                  # The filter that trigger this change is ID = 'dropdown-country' the component 'value' | Much inputs as filters
-        Input('dropdown-year-wine', 'value')]
+        Input('dropdown-style-wine', 'value'),]
     )
 
-def update_graph_3(countries, continents, sub_regions, year):
+def update_graph_3(style):
 
-    countries = list(countries) if countries else []
-    continents = list(continents) if continents else []
-    sub_regions = list(sub_regions) if sub_regions else []
-    year = list(year) if year else []
-
-    if not any([countries, continents, sub_regions, year]):
+    style = list(style) if style else []
+    
+    if not any([style]):
         filtered_df = data_top10.copy()
         
-        average_reviews = filtered_df.groupby('Style')['Reviews'].mean()
-        average_price = filtered_df.groupby('Style')['Price'].mean()
-        average_rating = filtered_df.groupby('Style')['Rating'].mean()
-        Style_unique = filtered_df.groupby('Style', as_index=False)['Rating'].count()['Style']
+        average_reviews = filtered_df.groupby('Country')['Reviews'].mean()
+        average_price = filtered_df.groupby('Country')['Price'].mean()
+        average_rating = filtered_df.groupby('Country')['Rating'].mean()
+        Country_unique = filtered_df.groupby('Country', as_index=False)['Rating'].count()['Country']
         
-    else:
+        fig = px.scatter(filtered_df, x= average_price, y=average_rating,
+                        size=average_reviews, color=Country_unique, hover_name=Country_unique,
+                        log_x=True, facet_col_wrap=1)
+        
+    else:     
         filtered_df = data_top10[
-            (data_top10['Country'].isin(countries) if countries else True) &
-            (data_top10['Wine Continent'].isin(continents) if continents else True) &
-            (data_top10['Sub_region'].isin(sub_regions) if sub_regions else True) &
-            (data_top10['Year'].isin(year) if year else True)]
+            (data_top10['Style'].isin(style) if style else True)]
 
-        average_reviews = filtered_df.groupby('Style')['Reviews'].mean()
-        average_price = filtered_df.groupby('Style')['Price'].mean()
-        average_rating = filtered_df.groupby('Style')['Rating'].mean()
-        Style_unique = filtered_df.groupby('Style', as_index=False)['Rating'].count()['Style']
+        average_reviews = filtered_df.groupby('Country')['Reviews'].mean()
+        average_price = filtered_df.groupby('Country')['Price'].mean()
+        average_rating = filtered_df.groupby('Country')['Rating'].mean()
+        Country_unique = filtered_df.groupby('Country', as_index=False)['Rating'].count()['Country']
 
-    fig = px.scatter(filtered_df, x= average_price, y=average_rating,
-            size=average_reviews, color=Style_unique, hover_name=Style_unique,
-            log_x=True, facet_col_wrap=1)
-
+        fig = px.scatter(filtered_df, x= average_price, y=average_rating,
+                        size=average_reviews, color=Country_unique, hover_name=Country_unique,
+                        log_x=True, facet_col_wrap=1)
+            
     layout = {'template': 'plotly_dark'}
-
 
     fig.update_layout(layout)    
 
     fig.update_layout(
-        xaxis_title='Average Price',
-        yaxis_title='Average Rating',
-        showlegend=True,
-        height=400,
-        margin=dict(l=20, r=20, t=80, b=20),
-        autosize=True,
-        paper_bgcolor='#242424',
-        plot_bgcolor='#242424',
-        title=dict(
-            text='Wine Reviews vs Price by Country',
-            x=0.5,
-            y=0.95,
-            xanchor='center',
-            yanchor='top',
-            font=dict(size=20, color='#66B2FF'),
-        ),
-    )
-
+                    xaxis_title='Average Price',
+                    yaxis_title='Average Rating',
+                    showlegend=True,
+                    height=400,
+                    margin=dict(l=20, r=20, t=80, b=20),
+                    autosize=True,
+                    paper_bgcolor='#242424',
+                    plot_bgcolor='#242424',
+                    title=dict(
+                        text='Wine Reviews vs Price per Country',
+                        x=0.5,
+                        y=0.95,
+                        xanchor='center',
+                        yanchor='top',
+                        font=dict(size=20, color='#66B2FF'),
+                    ),
+                )
+        
     return fig
-
 
 if __name__ == '__main__':
     app.run_server(debug=True)   
