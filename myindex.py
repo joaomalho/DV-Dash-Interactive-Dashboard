@@ -116,6 +116,8 @@ data_year_wine = data_top10['Year'].unique()
 # Wine
 data_wine = data_top10['Wine'].unique()
 
+
+
 # Bibliography
 # 1 - https://www.kaggle.com/datasets/joshuakalobbowles/vivino-wine-data-top-10-countries-exchina | Vivino data base
 # 2 - https://ourworldindata.org/grapher/wine-production | Wine Production and Compsumption
@@ -1070,7 +1072,7 @@ def update_wine_details(wine):
 def update_graph_3(style):
 
     style = list(style) if style else []
-    
+
     if not any([style]):
         filtered_df = data_top10.copy()
         
@@ -1083,6 +1085,31 @@ def update_graph_3(style):
                         size=average_reviews, color=Country_unique, hover_name=Country_unique,
                         log_x=True, facet_col_wrap=1)
         
+        layout = {'template': 'plotly_dark'}
+
+        fig.update_layout(layout)    
+
+        fig.update_layout(
+                        xaxis_title='Average Price',
+                        yaxis_title='Average Rating',
+                        showlegend=True,
+                        height=400,
+                        margin=dict(l=20, r=20, t=80, b=20),
+                        autosize=True,
+                        paper_bgcolor='#242424',
+                        plot_bgcolor='#242424',
+                        title=dict(
+                            text='Wine Reviews vs Price per Country',
+                            x=0.5,
+                            y=0.95,
+                            xanchor='center',
+                            yanchor='top',
+                            font=dict(size=20, color='#66B2FF'),
+                        ),
+                    )
+    
+
+        
     else:     
         filtered_df = data_top10[
             (data_top10['Style'].isin(style) if style else True)]
@@ -1093,43 +1120,34 @@ def update_graph_3(style):
         Country_unique = filtered_df.groupby('Country', as_index=False)['Rating'].count()['Country']
 
         
+        
         fig = px.scatter(filtered_df, x= average_price, y=average_rating,
                         size=average_reviews, color=Country_unique, hover_name=Country_unique,
                         log_x=True, facet_col_wrap=1)
             
-    layout = {'template': 'plotly_dark'}
+        layout = {'template': 'plotly_dark'}
 
-    fig.update_layout(layout)    
+        fig.update_layout(layout)    
 
-    fig.update_layout(
-                    xaxis_title='Average Price',
-                    yaxis_title='Average Rating',
-                    showlegend=True,
-                    height=400,
-                    margin=dict(l=20, r=20, t=80, b=20),
-                    autosize=True,
-                    paper_bgcolor='#242424',
-                    plot_bgcolor='#242424',
-                    title=dict(
-                        text='Wine Reviews vs Price per Country',
-                        x=0.5,
-                        y=0.95,
-                        xanchor='center',
-                        yanchor='top',
-                        font=dict(size=20, color='#66B2FF'),
-                    ),
-                )
-    
-    fig.update_traces(
-                    hovertemplate='<b>%{hovertext}</b><br><br>' +
-                                'Avg. of Price: $%{x:.2f}<br>' +
-                                'Avg. of Rating: %{y:.2f}<br>' +
-                                'Avg. # of Reviews: %{marker.size:.2f}<br>' +
-                                '<extra></extra>',
-                    hovertext=Country_unique,
-                    name='Country'
-                )
-        
+        fig.update_layout(
+                        xaxis_title='Average Price',
+                        yaxis_title='Average Rating',
+                        showlegend=True,
+                        height=400,
+                        margin=dict(l=20, r=20, t=80, b=20),
+                        autosize=True,
+                        paper_bgcolor='#242424',
+                        plot_bgcolor='#242424',
+                        title=dict(
+                            text='Wine Reviews vs Price per Country',
+                            x=0.5,
+                            y=0.95,
+                            xanchor='center',
+                            yanchor='top',
+                            font=dict(size=20, color='#66B2FF'),
+                        ),
+                    )
+
     return fig
 
 if __name__ == '__main__':
