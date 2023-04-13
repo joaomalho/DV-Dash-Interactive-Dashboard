@@ -428,7 +428,7 @@ app.layout = dbc.Container(children=[
                         
                         # === Graph 2 === #
                         dcc.Loading(
-                                        id='loading-1', 
+                                        id='loading-2', 
                                         type='default', 
                                         children=[
                                                     dcc.Graph(
@@ -442,7 +442,7 @@ app.layout = dbc.Container(children=[
                     dbc.Col([
                         # === Graph 3 === #
                         dcc.Loading(
-                                        id='loading-1', 
+                                        id='loading-3', 
                                         type='default', 
                                         children=[
                                                     dcc.Graph(
@@ -506,7 +506,7 @@ app.layout = dbc.Container(children=[
 
                         # === Graph 1 - image === #
                         dcc.Loading(
-                                    id='loading-1', 
+                                    id='loading-4', 
                                     type='default', 
                                     children=[
                                         html.Div([
@@ -524,7 +524,7 @@ app.layout = dbc.Container(children=[
                             dbc.Row([
                             # === Graph 2 === #
                             dcc.Loading(
-                                            id='loading-1', 
+                                            id='loading-5', 
                                             type='default', 
                                             children=[
                                                     html.Legend("Country", style={'font-size': '20px'}),                              # Title
@@ -535,7 +535,7 @@ app.layout = dbc.Container(children=[
                             dbc.Row([
                             # === Graph 2 === #
                             dcc.Loading(
-                                            id='loading-1', 
+                                            id='loading-6', 
                                             type='default', 
                                             children=[
                                                     html.Legend("Style", style={'font-size': '20px'}),                              # Title
@@ -546,7 +546,7 @@ app.layout = dbc.Container(children=[
                             dbc.Row([
                             # === Graph 2 === #
                             dcc.Loading(
-                                            id='loading-1', 
+                                            id='loading-7', 
                                             type='default', 
                                             children=[
                                                     html.Legend("Rating", style={'font-size': '20px'}),                              # Title
@@ -557,7 +557,7 @@ app.layout = dbc.Container(children=[
                             dbc.Row([
                             # === Graph 2 === #
                             dcc.Loading(
-                                            id='loading-1', 
+                                            id='loading-8', 
                                             type='default', 
                                             children=[
                                                     html.Legend("Reviews", style={'font-size': '20px'}),                              # Title
@@ -568,7 +568,7 @@ app.layout = dbc.Container(children=[
                             dbc.Row([
                             # === Graph 2 === #
                             dcc.Loading(
-                                            id='loading-1', 
+                                            id='loading-9', 
                                             type='default', 
                                             children=[
                                                     html.Legend("Price", style={'font-size': '20px'}),                              # Title
@@ -635,7 +635,7 @@ app.layout = dbc.Container(children=[
                         
                         # === Graph 3 === #
                         dcc.Loading(
-                                        id='loading-1', 
+                                        id='loading-10', 
                                         type='default', 
                                         children=[
                                                     dcc.Graph(
