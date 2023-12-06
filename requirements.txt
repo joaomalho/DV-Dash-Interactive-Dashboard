@@ -8,7 +8,7 @@ dash_bootstrap_templates==1.0.8
 pip==23.0.1
 requests
 openpyxl==3.1.2
-Pillow==9.4.0
+Pillow==10.0.1
 bs4==0.0.1
 matplotlib==3.5.3
 IPython==7.34.0
